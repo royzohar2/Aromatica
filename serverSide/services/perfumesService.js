@@ -31,7 +31,7 @@ const createPerfume = async (perfume) => {
       price: perfume.price,
       numberOfPurchase: perfume.numberOfPurchase,
       id: perfume.id,
-      category: game.category,
+      category: perfume.category,
     });
     const perfume_db = await newPerfume.save();
     if (perfume_db) {
@@ -45,7 +45,10 @@ const createPerfume = async (perfume) => {
 //updatePerfume
 const updatePerfume = async (id, perfume) => {
   try {
-    const updatedPerfume = await Perfume.findByIdAndUpdate(id, perfume);
+    const updatedPerfume = await Perfume.findByIdAndUpdate(id, perfume, {
+      new: true,
+    });
+    //console.log(updatedPerfume);
     if (updatedPerfume) {
       return updatedPerfume;
     }
@@ -56,7 +59,7 @@ const updatePerfume = async (id, perfume) => {
 //deletePerfume
 const deletePerfume = async (id) => {
   try {
-    await Perfume.findByIdAndDelete(id);
+    await Perfume.findByIdAndRemove({ _id: id });
   } catch (error) {
     throw new Error("Error delete perfume: " + error.message);
   }

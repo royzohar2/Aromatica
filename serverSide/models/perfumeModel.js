@@ -27,4 +27,4 @@ const perfumeSchema = new Schema({
 });
 
 // Export the perfume model
-module.exports = mongoose.model("perfume", perfumeSchema, "perfumes");
+module.exports = mongoose.model("perfume", perfumeSchema);

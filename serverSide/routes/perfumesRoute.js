@@ -1,7 +1,7 @@
 //define the routs for the perfumes in my server.
 const express = require("express");
 const perfumesController = require("../controllers/perfumesController");
-const router = express.Router();
+const router = express.Router(); //allows us to create different router in a separate file
 
 // GET endpoint to return the list of perfumes
 router.get("/", perfumesController.getAllPerfumes);
@@ -27,4 +27,5 @@ router.delete(
   perfumesController.deletePerfume
 );
 
+//so we can use it in the app.js
 module.exports = router;

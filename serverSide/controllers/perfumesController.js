@@ -51,13 +51,13 @@ async function validatePerfume(req, res, next) {
 const createPerfume = async (req, res, next) => {
   try {
     const perfume = req.body;
-    const perfumeId = await perfumesService.createPerfume(perfume);
+    const perfumeDB = await perfumesService.createPerfume(perfume);
 
     // If the new game was not created successfully
-    if (!perfumeId) {
+    if (!perfumeDB) {
       res.status(400).send("Something went wrong");
     } else {
-      res.status(200).send(perfumeId);
+      res.status(200).send(perfumeDB);
     }
   } catch (err) {
     res
@@ -68,13 +68,18 @@ const createPerfume = async (req, res, next) => {
 
 //validatePerfumeUpdate
 async function validatePerfumeUpdate(req, res, next) {
-  const { id } = req.body;
+  // Check if the 'userId' is provided
+  // Check if the user exists
+  // Check if the user is an admin
 
-  if (id) {
-    res.status(400);
-  } else {
-    next();
-  }
+  //const id = req.body;
+  //console.log(id);
+
+  //if (!id) {
+  //  res.status(400);
+  // } else {
+  next();
+  // }
 }
 
 /**
@@ -85,10 +90,8 @@ const updatePerfume = async (req, res) => {
   try {
     const { id, perfume } = req.body;
     const updatedPerfume = await perfumesService.updatePerfume(id, perfume);
-
-    // If the game was not updated successfully
     if (!updatedPerfume) {
-      res.status(400).send("Something went wrong -> updatePerfume");
+      res.status(400).send("Something went wrong -> updatePerfume1");
     } else {
       res.status(200).send(updatedPerfume);
     }
@@ -101,16 +104,14 @@ const updatePerfume = async (req, res) => {
 const deletePerfume = async (req, res) => {
   try {
     const { id } = req.body;
-    const perfume = await perfumesService.getPerfumeById(id);
-
+    // const perfume = await perfumesService.getPerfumeById(id);
     // If the perfume was not found
-    if (!perfume) {
+    if (!id) {
       res.send("Something went wrong");
-    } else {
-      // Delete the game
-      await perfumesService.deletePerfume(id);
-      res.status(200).send("Game deleted successfully");
     }
+    // Delete the perfume
+    await perfumesService.deletePerfume(id);
+    res.status(200).send("Perfume deleted successfully");
   } catch (err) {
     res.status(400).send("Something went wrong -> deletePerfume");
   }
