@@ -15,10 +15,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
+  roles: [
+    {
+      type: String,
+    },
+  ],
   //keep track of the perfumes that a user has added to their shopping cart.
   cart: [
     {

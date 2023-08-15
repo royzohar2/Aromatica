@@ -1,12 +1,22 @@
 const Perfume = require("../models/perfumeModel");
 
 // Get a list of all perfumes
-async function getAllPerfumes() {
+async function getPerfumes(filters) {
   try {
-    const perfumes = await Perfume.find({});
+    const query = {};
+    if (filters.category) {
+      query.category = filters.category;
+    }
+    if (filters.brand) {
+      query.brand = filters.brand;
+    }
+    if (filters.maxCost) {
+      query.price = { $lte: parseInt(filters.maxCost) };
+    }
+    const perfumes = await Perfume.find(query);
     return perfumes;
   } catch (error) {
-    throw new Error("Error fetching perfumes: " + error.message);
+    throw new Error("Error fetching filtered perfumes: " + error.message);
   }
 }
 
@@ -66,7 +76,7 @@ const deletePerfume = async (id) => {
 };
 
 module.exports = {
-  getAllPerfumes,
+  getPerfumes,
   getPerfumeById,
   createPerfume,
   updatePerfume,

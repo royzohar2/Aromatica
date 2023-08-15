@@ -1,10 +1,11 @@
 const perfumesService = require("../services/perfumesService");
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 
 //get all the perfumes
-const getAllPerfumes = async (req, res) => {
+const getPerfumes = async (req, res) => {
   try {
-    const perfumes = await perfumesService.getAllPerfumes();
+    const filters = req.query;
+    const perfumes = await perfumesService.getPerfumes(filters);
     res.status(200).json(perfumes);
   } catch (err) {
     res.status(400).send("Something went wrong -> getAllPerfumes");
@@ -117,7 +118,7 @@ const deletePerfume = async (req, res) => {
   }
 };
 module.exports = {
-  getAllPerfumes,
+  getPerfumes,
   getPerfumeById,
   validatePerfume,
   createPerfume,

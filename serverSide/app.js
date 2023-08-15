@@ -6,6 +6,14 @@ const app = express();
 const cors = require("cors");
 const PORT = 3000;
 
+// define the communication between the host and server
+const http = require("http");
+const socketIo = require("socket.io");
+const server = http.createServer(app);
+const io = socketIo(server);
+const { handleClient } = require("./utills/socket");
+handleClient(io);
+
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -15,6 +23,10 @@ app.use(express.urlencoded({ extended: false }));
 // load routers
 app.use("/perfumes", require("./routes/perfumesRoute"));
 app.use("/account", require("./routes/usersRoutes"));
+app.use("/auth", require("./routes/authRoute"));
+app.use("/order", require("./routes/orderRoute"));
+app.use("/statistic", require("./routes/statisticsRoute"));
+app.use("/point", require("./routes/pointsRoute"));
 
 // Connect to the MongoDB database
 mongoose.connect(
