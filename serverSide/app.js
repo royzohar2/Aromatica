@@ -7,12 +7,12 @@ const cors = require("cors");
 const PORT = 3000;
 
 // define the communication between the host and server
-const http = require("http");
-const socketIo = require("socket.io");
-const server = http.createServer(app);
-const io = socketIo(server);
-const { handleClient } = require("./utills/socket");
-handleClient(io);
+// const http = require("http");
+// const socketIo = require("socket.io");
+// const server = http.createServer(app);
+// const io = socketIo(server);
+// const { handleClient } = require("./utills/socket");
+// handleClient(io);
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,6 +27,7 @@ app.use("/auth", require("./routes/authRoute"));
 app.use("/order", require("./routes/orderRoute"));
 app.use("/statistic", require("./routes/statisticsRoute"));
 app.use("/point", require("./routes/pointsRoute"));
+app.use("/currency", require("./routes/currencyRoute"));
 
 // Connect to the MongoDB database
 mongoose.connect(

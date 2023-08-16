@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import url("./navbar.css");
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Quicksand", sans-serif;
+}
+#content {
+  flex: 1;
+  background-color: rgb(242, 242, 242);
+}
+img {
+  border-radius: 30px;
+}
