@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="./css/profile.css"/>
+<p>this is the products page</p>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <header class="bg-light py-3">
+        <div class="container">
+            <h1 class="h3">User Profile</h1>
+        </div>
+    </header>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="list-group">
+                    <button id="userInfoBtn" class="list-group-item list-group-item-action active">User Info</button>
+                    <button id="orderHistoryBtn" class="list-group-item list-group-item-action">Order History</button>
+                    <button id="adminPageBtn" class="list-group-item list-group-item-action">Admin Page</button>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-header">
+                        User Information
+                    </div>
+                    <div class="card-body">
+                        <div class="profile-box">
+                            <label for="name">Name:</label>
+                            <div id="nameBox"></div>
+                        </div>
+                        <div class="profile-box">
+                            <label for="email">Email:</label>
+                            <div id="emailBox"></div>
+                        </div>
+                        <div class="profile-box">
+                            <label for="role">Role:</label>
+                            <div id="roleBox"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
