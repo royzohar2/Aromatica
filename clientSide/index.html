@@ -63,24 +63,40 @@
                 ></a>
               </li>
               <li class="nav-item">
-                <a href=""
-                  ><i class="fa-regular fa-user" style="color: #000000"></i
+                <a href="profile"
+                  ><i class="fa-regular fa-user me-3" style="color: #000000"></i
                 ></a>
               </li>
 
               <li class="nav-item">
                 <button
                   type="button"
-                  class="btn btn-outline-dark"
+                  class="btn btn-outline-dark me-2"
                   data-bs-toggle="modal"
                   data-bs-target="#loginModal"
+                  id="loginButton"
                 >
                   Log In
                 </button>
               </li>
               <li class="nav-item">
-                <button type="button" class="btn btn-outline-dark">
-                  sign up
+                <button
+                  type="button"
+                  class="btn btn-outline-dark me-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#signupModal"
+                  id="signupButton"
+                >
+                  Sign up
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  id="logoutButton"
+                >
+                  Log Out
                 </button>
               </li>
             </ul>
@@ -113,12 +129,12 @@
           <div class="modal-body">
             <form id="loginForm">
               <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label for="email" class="form-label">Email</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="username"
-                  placeholder="Enter your username"
+                  id="email"
+                  placeholder="Enter your email"
                 />
               </div>
               <div class="mb-3">
@@ -130,7 +146,62 @@
                   placeholder="Enter your password"
                 />
               </div>
-              <button type="submit" class="btn btn-primary">Log In</button>
+              <button type="submit" class="btn btn-dark">Log In</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div
+      class="modal fade"
+      id="signupModal"
+      tabindex="-1"
+      aria-labelledby="signupModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="signupForm">
+              <div class="mb-3">
+                <label for="fullname" class="form-label">Full Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fullname"
+                  placeholder="Enter your full name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="signupEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="signupEmail"
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="signupPassword" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="signupPassword"
+                  placeholder="Enter your password"
+                />
+              </div>
+              <button type="submit" class="btn btn-dark">Sign Up</button>
             </form>
           </div>
         </div>
