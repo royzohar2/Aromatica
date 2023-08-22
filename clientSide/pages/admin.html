@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="./css/admin.css" />
+
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button id="order" class="btn btn-primary btn-block admin-option" data-option="order">Orders</button>
+            </div>
+            <div class="col-md-4">
+                <button id="client" class="btn btn-primary btn-block admin-option" data-option="client">Clients</button>
+            </div>
+            <div class="col-md-4">
+                <button id="product" class="btn btn-primary btn-block admin-option" data-option="product">Products</button>
+            </div>
+        </div>
+    
+        <div class="admin-content">
+            <!-- Content from selected option will be loaded here -->
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Perfume Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                
+            </div>
+        </div>
+    </div>
+    
+    
+
+<!-- Include jQuery and Bootstrap JS -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script> -->
+<script src="./js/admin.js"></script>
+
+

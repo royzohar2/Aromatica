@@ -1,0 +1,23 @@
+.filters-container {
+  padding-left: 50px;
+  width: 15%;
+}
+/* Adjust card size */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Limit card content height */
+.card-body {
+  flex: 1;
+}
+.card-img-top {
+  object-fit: contain; /* Make sure the image covers the entire container */
+  height: 210px; /* Set a fixed height for the image */
+  width: 200px;
+  margin: 20px;
+  cursor: pointer;
+  position: relative;
+}

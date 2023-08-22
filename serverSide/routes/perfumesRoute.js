@@ -8,14 +8,14 @@ const authMiddleware = require("../middlewares/auth-middleware");
 //permition user+admin
 router.get(
   "/",
-  authMiddleware.requireRole("user"),
+  //authMiddleware.requireRole("user"),
   perfumesController.getPerfumes
 );
 // GET endpoint to get details of a specific perfume
 //permision user+admin
 router.get(
   "/:id",
-  authMiddleware.requireRole("user"),
+  //authMiddleware.requireRole("user"),
   perfumesController.getPerfumeById
 );
 
