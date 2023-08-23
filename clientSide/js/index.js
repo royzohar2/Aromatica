@@ -179,7 +179,6 @@ const router = (() => {
   function getParams() {
     return correntParams;
   }
-
   return {
     navigateTo,
     getParams,
