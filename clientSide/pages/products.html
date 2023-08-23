@@ -1,2 +1,87 @@
 <link rel="stylesheet" href="./css/products.css" />
-<p>this is the products page</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 mt-5 filters-container">
+      <div class="mb-4">
+        <h4>Filters</h4>
+        <div class="mb-3">
+          <label class="form-label">Gender</label>
+          <div class="form-check">
+            <input
+              class="form-check-input filter-option"
+              type="checkbox"
+              name="gender"
+              value="woman"
+            />
+            <label class="form-check-label">Woman</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input filter-option"
+              type="checkbox"
+              name="gender"
+              value="man"
+            />
+            <label class="form-check-label">Man</label>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Brand</label>
+          <div class="form-check">
+            <input
+              class="form-check-input filter-option"
+              type="checkbox"
+              name="brand"
+              value="chanel"
+            />
+            <label class="form-check-label">Chanel</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input filter-option"
+              type="checkbox"
+              name="brand"
+              value="dior"
+            />
+            <label class="form-check-label">Dior</label>
+          </div>
+          <!-- Add more brand options here -->
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Price</label>
+          <div class="form-check">
+            <input
+              class="form-check-input filter-option"
+              type="checkbox"
+              name="price"
+              value="500"
+            />
+            <label class="form-check-label">Up to $500</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input filter-option"
+              type="checkbox"
+              name="price"
+              value="1000"
+            />
+            <label class="form-check-label">Up to $1000</label>
+          </div>
+        </div>
+        <button id="btn-apply-filters" class="btn btn-dark">
+          Apply Filters
+        </button>
+        <button id="btn-reset-filters" class="btn btn-light mt-3">
+          Reset Filters
+        </button>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="row mt-5 perfume-list">
+        <!-- Perfume products will be displayed here -->
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./js/products.js"></script>
