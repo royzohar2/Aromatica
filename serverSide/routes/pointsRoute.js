@@ -28,7 +28,7 @@ router.post("/", authMiddleware.requireRole("admin"), (req, res) => {
 });
 
 // Get all points
-router.get("/", authMiddleware.requireRole("admin"), (req, res) => {
+router.get("/", (req, res) => {
   Point.find()
     .then((points) => res.json(points))
     .catch((error) =>

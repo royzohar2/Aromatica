@@ -2,39 +2,9 @@
   padding-left: 50px;
   width: 15%;
 }
-/* Adjust card size */
-.card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
 
-/* Limit card content height */
-.card-body {
-  flex: 1;
-}
-.card-img-top {
-  object-fit: contain; /* Make sure the image covers the entire container */
-  height: 210px; /* Set a fixed height for the image */
-  width: 200px;
-  margin: 20px;
-  cursor: pointer;
-  position: relative;
-}
-/* Add this to your CSS file or in a <style> tag in your HTML */
-.carousel-inner {
-  height: 400px; /* Change this value to your desired height */
-}
-
-.carousel-item {
-  height: 100%; /* This makes sure the item fills the carousel's height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.carousel-item img {
-  max-width: 100%; /* Set the maximum width of the image to 100% */
-  max-height: 100%; /* Set the maximum height of the image to 100% */
-  object-fit: contain; /* This maintains the aspect ratio and fits the image within the slide */
+@media screen and (min-width: 768px) {
+  .card-img-wrapper {
+    height: 200px !important;
+  }
 }

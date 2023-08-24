@@ -1,29 +1,56 @@
 $(document).ready(async function () {
+  const exchangeRate = await fetchExchangeRate(); // Fetch exchange rate
   const allPerfumes = await fetchAllPerfumes();
-  renderPerfumes(allPerfumes);
-  setFilterHendlers();
+  renderPerfumes(allPerfumes, exchangeRate);
+  setFilterHendlers(exchangeRate);
 });
+async function fetchExchangeRate() {
+  try {
+    const response = await $.ajax({
+      type: "GET",
+      url: "http://localhost:3000/currency/exchange-rate",
+      dataType: "json",
+    });
 
-function renderPerfumes(perfumes) {
+    const usdToIlsRate = response.rate;
+    //console.log("Exchange rate:", usdToIlsRate);
+    return usdToIlsRate; // Return the exchange rate
+  } catch (error) {
+    console.error("Error fetching exchange rate:", error);
+    return 0; // Return a default value in case of error
+  }
+}
+
+function renderPerfumes(perfumes, exchangeRate) {
   const perfumeList = $(".perfume-list");
   perfumeList.empty();
 
   perfumes.forEach((perfume) => {
     const id = perfume["_id"];
-    const card = `
-    
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="${perfume.image}" class="card-img-top" alt="${perfume.name}" onclick="router.navigateTo('product','id=${id}');">
-          <div class="card-body">
-            <h5 class="card-title">${perfume.name}</h5>
-            <p class="card-text">by ${perfume.brand}</p>
-            <p class="card-text">Price: ₪${perfume.price}</p>
-            <button class="btn btn-dark" onclick="addToCart('${perfume.name}', ${perfume.price}, '${perfume.image}')">Add to Cart</button>
-          </div>
-        </div>
+    const priceInShekels = perfume.price;
+    const priceInDollars = (priceInShekels / exchangeRate).toFixed(2);
+
+    const card = `<div class="col-12 col-md-6 col-xl-3 h-100 p-2">
+    <div class="card">
+      <div class="card-img-wrapper p-3 d-flex align-items-center">
+        <img
+          src="${perfume.image}"
+          class="card-img-top h-100"
+          alt="${perfume.name}"
+          onclick="router.navigateTo('product', 'id=${id}');"
+        />
       </div>
-    `;
+      <div class="card-body">
+        <h5 class="card-title">${perfume.name}</h5>
+        <p class="card-text">
+          <p>by ${perfume.brand}</p>
+          <p>Price: ₪${priceInShekels} | $${priceInDollars}</p>
+        </p>
+        <a href="#" class="btn btn-dark" onclick="addToCart('${perfume.name}', ${perfume.price}, '${perfume.image}')">Add To Cart</a>
+      </div>
+    </div>
+  </div>`;
+
     perfumeList.append(card);
   });
 }
@@ -49,7 +76,8 @@ async function fetchAllPerfumes() {
     return [];
   }
 }
-function setFilterHendlers() {
+
+function setFilterHendlers(exchangeRate) {
   $(".filter-option").on("click", function () {
     // Get the name of the clicked checkbox group
     const groupName = $(this).attr("name");
@@ -64,6 +92,7 @@ function setFilterHendlers() {
   // });
 
   $("#btn-apply-filters").on("click", async function () {
+    console.log(exchangeRate);
     const gender = $("input[name='gender']:checked").val();
     const brand = $("input[name='brand']:checked").val();
     const price = $("input[name='price']:checked").val();
@@ -90,7 +119,7 @@ function setFilterHendlers() {
         // },
       });
 
-      renderPerfumes(response);
+      renderPerfumes(response, exchangeRate);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
