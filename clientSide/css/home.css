@@ -3,3 +3,22 @@
   max-height: 600px;
   max-width: 400px;
 }
+/* #myMap {
+  width: 30%;
+  height: 300px;
+}  */
+/* Apply Bootstrap styling to center the map */
+.map-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Apply custom styling to the map */
+#myMap {
+  width: 40%; /* Adjust the width as needed */
+  height: 400px; /* Adjust the height as needed */
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
