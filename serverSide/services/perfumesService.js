@@ -4,6 +4,11 @@ const Perfume = require("../models/perfumeModel");
 async function getPerfumes(filters) {
   try {
     const query = {};
+    if (filters.search) {
+      query.name = { $regex: filters.search, $options: "i" };
+      query.brand = { $regex: filters.search, $options: "i" };
+      //query.discripyion = { "$regex": filters.search, "$options": "i" }
+    }
     if (filters.category) {
       query.category = filters.category;
     }

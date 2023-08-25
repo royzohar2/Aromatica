@@ -45,13 +45,16 @@
               </li>
             </ul>
             <form class="d-flex me-auto" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-dark" type="submit">Search</button>
+              <div class="position-relative">
+                <input
+                  id="search-input"
+                  class="form-control me-2"
+                  type="search"
+                  placeholder="Search Perfume"
+                  aria-label="Search"
+                />
+                <div class="search-results" id="searchResults"></div>
+              </div>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0 d-flex align-items-center">
               <li class="nav-item">

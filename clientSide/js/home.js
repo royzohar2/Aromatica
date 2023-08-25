@@ -1,3 +1,12 @@
+(() => {
+  $(document).ready(function () {
+    $("#buyNowButton").on("click", async function () {
+      // Redirect to the dynamically generated products.html page
+      router.navigateTo("products");
+    });
+  });
+})();
+
 function loadMapScenario() {
   const map = new Microsoft.Maps.Map(document.getElementById("myMap"), {
     credentials:

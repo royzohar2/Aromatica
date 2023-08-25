@@ -2,14 +2,10 @@
   $(document).ready(function () {
     console.log("document ready index");
 
-    $("#content").on("click", "#buyNowButton", async function () {
-      // Redirect to the dynamically generated products.html page
-      router.navigateTo("products");
-    });
-
     setDialogHandler();
     setNavBarHandler();
     updateAuthButtons(); // Update the authentication buttons on page load
+    setSearchHandler();
 
     // Load the initial content (Home page)
     const correntUrl = window.location.hash.slice(1).split("?"); // Remove the '#'
@@ -31,6 +27,31 @@
       const params = correntUrl?.[1];
       await router.navigateTo(page, params);
     });
+  }
+
+  function setSearchHandler() {
+    $("#search-input").on("keyup", async function (event) {
+      const search = $(this).val();
+      const queryParams = { name: search };
+      debounce(() => searchProducts(search), 500);
+    });
+  }
+
+  async function searchProducts(search) {
+    try {
+      const response = await $.ajax({
+        type: "GET",
+        url: `http://localhost:3000/perfumes?search=${search}`,
+        dataType: "json",
+      });
+      // Display search results in the modal
+      updateSearchResults(response);
+      // Open the modal
+      $("#searchResultsModal").modal("show");
+      //return response;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
   function setDialogHandler() {
@@ -141,6 +162,35 @@
     }
   }
 
+  function updateSearchResults(results) {
+    const searchResultsContainer = $("#searchResults");
+    searchResultsContainer.empty();
+
+    if (results.length === 0) {
+      searchResultsContainer.html("<p>No results found</p>");
+      return;
+    }
+
+    const resultList = $("<ul class='list-group'></ul>");
+
+    results.forEach((result) => {
+      // Create a list item for each search result
+      const id = result["_id"];
+      const listItem = `<li class='list-group-item' onclick="router.navigateTo('product', 'id=${id}');">
+        <div class='d-flex align-items-center'>
+          <img src='${result.image}' class='me-2' alt='${result.name}' style='max-width: 40px;'>
+          <div>
+            <strong>${result.name}</strong>
+            <p class='mb-0'>${result.brand}</p>
+          </div>
+        </div>
+      </li>`;
+      resultList.append(listItem);
+    });
+
+    searchResultsContainer.append(resultList);
+  }
+
   // Log out functionality
   $("#logoutButton").on("click", function () {
     localStorage.removeItem("token"); // Clear the token from local storage
@@ -148,6 +198,12 @@
     updateAuthButtons(); // Update the authentication buttons
     router.navigateTo("home");
   });
+
+  let searchTimeout;
+  function debounce(func, delay) {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(func, delay);
+  }
 })();
 
 const router = (() => {

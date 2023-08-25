@@ -44,6 +44,7 @@ function renderPerfumes(perfumes, exchangeRate) {
         <h5 class="card-title">${perfume.name}</h5>
         <p class="card-text">
           <p>by ${perfume.brand}</p>
+          <p>for ${perfume.category}</p>
           <p>Price: ₪${priceInShekels} | $${priceInDollars}</p>
         </p>
         <a href="#" class="btn btn-dark" onclick="addToCart('${perfume.name}', ${perfume.price}, '${perfume.image}')">Add To Cart</a>
@@ -56,18 +57,10 @@ function renderPerfumes(perfumes, exchangeRate) {
 }
 async function fetchAllPerfumes() {
   try {
-    // const token = localStorage.getItem("token");
-    // if (!token) {
-    //   throw new Error("Missing token");
-    // }
-
     const response = await $.ajax({
       type: "GET",
       url: "http://localhost:3000/perfumes",
       dataType: "json",
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
     });
 
     return response;
@@ -101,22 +94,12 @@ function setFilterHendlers(exchangeRate) {
     if (gender) queryParams.category = gender;
     if (brand) queryParams.brand = brand;
     if (price) queryParams.maxCost = price;
-    console.log(queryParams);
 
     try {
-      // const token = localStorage.getItem("token");
-      // console.log(token);
-      // if (!token) {
-      //   throw new Error("Missing token");
-      // }
-
       const response = await $.ajax({
         type: "GET",
         url: `http://localhost:3000/perfumes?${$.param(queryParams)}`,
         dataType: "json",
-        // headers: {
-        //   Authorization: `Bearer ${token}`,
-        // },
       });
 
       renderPerfumes(response, exchangeRate);
