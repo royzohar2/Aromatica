@@ -156,18 +156,19 @@ function shopNow() {
 
   // Prepare order data from cart items
   const orderItems = Object.keys(cartItems).map((productName) => {
-    const { quantity, price, imageSrc } = cartItems[productName];
+    const { quantity, price, imageSrc, productId } = cartItems[productName];
     return {
       productName,
       quantity,
       price,
       imageSrc,
+      productId,
     };
   });
-
+  const productsId = orderItems.map((product) => product.productId);
   // Create an object with order details
   const orderData = {
-    items: orderItems,
+    products: productsId,
     totalAmount: calculateTotalAmount(cartItems),
   };
 
@@ -189,8 +190,8 @@ function shopNow() {
       // Update the cart display
       updateCart();
 
-       // Show the "Thank you" modal only if user is logged in and cart is not empty
-       if (!$.isEmptyObject(cartItems)) {
+      // Show the "Thank you" modal only if user is logged in and cart is not empty
+      if (!$.isEmptyObject(cartItems)) {
         $("#modal-3").modal("show");
       }
     },

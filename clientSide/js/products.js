@@ -47,7 +47,7 @@ function renderPerfumes(perfumes, exchangeRate) {
           <p>for ${perfume.category}</p>
           <p>Price: ₪${priceInShekels} | $${priceInDollars}</p>
         </p>
-        <a href="#" class="btn btn-dark" onclick="addToCart('${perfume.name}', ${perfume.price}, '${perfume.image}')">Add To Cart</a>
+        <a href="#" class="btn btn-dark" onclick="addToCart('${perfume.name}', ${perfume.price}, '${perfume.image}','${perfume._id}')">Add To Cart</a>
       </div>
     </div>
   </div>`;
@@ -108,7 +108,7 @@ function setFilterHendlers(exchangeRate) {
     }
   });
 }
-function addToCart(productName, productPrice, productImage) {
+function addToCart(productName, productPrice, productImage, productId) {
   const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
 
   // Check if the user is logged in
@@ -125,6 +125,7 @@ function addToCart(productName, productPrice, productImage) {
       quantity: 1,
       price: productPrice,
       imageSrc: productImage,
+      productId: productId,
     };
   }
 
