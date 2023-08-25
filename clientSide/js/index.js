@@ -190,6 +190,7 @@
 
     searchResultsContainer.append(resultList);
   }
+
   // Log out functionality
   $("#logoutButton").on("click", function () {
     localStorage.removeItem("token"); // Clear the token from local storage
