@@ -5,9 +5,11 @@ async function getPerfumes(filters) {
   try {
     const query = {};
     if (filters.search) {
-      query.name = { $regex: filters.search, $options: "i" };
-      query.brand = { $regex: filters.search, $options: "i" };
-      //query.discripyion = { "$regex": filters.search, "$options": "i" }
+      query.$or = [
+        { name: { $regex: filters.search, $options: "i" } },
+        { brand: { $regex: filters.search, $options: "i" } },
+        //discription
+      ];
     }
     if (filters.category) {
       query.category = filters.category;
