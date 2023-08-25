@@ -27,6 +27,7 @@ function updateCart() {
 
   for (const productName in cartItems) {
     const { quantity, price, imageSrc } = cartItems[productName];
+
     totalAmount += quantity * price;
 
     const cartItem = $("<tr>").appendTo(cartList);
@@ -56,7 +57,10 @@ function updateCart() {
 
     $("<td>").addClass("product-name").appendTo(cartItem).append(
       $("<a>")
-        .attr("href", "https://example.com/product-link") // Replace with actual link
+        .attr(
+          "href",
+          `http://127.0.0.1:5501/clientSide/index.html?#product?id=64d292c6dd6f34d72552ed4e`
+        ) // No href, use javascript:void(0)
         .text(productName)
     );
 
@@ -67,7 +71,7 @@ function updateCart() {
         $("<span>")
           .addClass("woocommerce-Price-amount amount")
           .html(
-            `<bdi><span class="woocommerce-Price-currencySymbol">$</span>${price.toFixed(
+            `<bdi><span class="woocommerce-Price-currencySymbol">₪</span>${price.toFixed(
               2
             )}</bdi>`
           )
@@ -117,7 +121,7 @@ function updateCart() {
         $("<span>")
           .addClass("woocommerce-Price-amount amount")
           .html(
-            `<bdi><span class="woocommerce-Price-currencySymbol">$</span>${(
+            `<bdi><span class="woocommerce-Price-currencySymbol">₪</span>${(
               price * quantity
             ).toFixed(2)}</bdi>`
           )
@@ -176,8 +180,11 @@ function shopNow() {
   $.ajax({
     type: "POST",
     url: "http://localhost:3000/order",
-    data: JSON.stringify(orderData),
     contentType: "application/json",
+    data: JSON.stringify({
+      items: orderItems,
+      totalAmount: totalAmount,
+    }),
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -212,6 +219,47 @@ function calculateTotalAmount(cartItems) {
 
   return totalAmount;
 }
+
+// Function to post to Facebook and append to target element
+function postToFacebook() {
+  //https://developers.facebook.com/tools/explorer/?method=POST&path=me%3Ffields%3Did%2Cemail&version=v17.0
+  const accessToken =
+    "EAALhZBWgmOlQBOZCkHNl1xXMncXvPS3hSU3dxTasdVMOgARkMWlAntJ8ODTlZBxYP9itjoHzEWfahRFtQ8S0gTquF8eunqwkPYH1NbjDJrywRZADBkzehJ7AG8q05Jnoka6nmGtk9MZBhBGRye1jlgKAUd5EPZCc4hIa7PfQaXczfNibW3QdSveWi9S6wJFhUZCQmHcBda34FpFZAZBtePWRPj8cZD";
+  const postMessage = `Attention all Kiotor lovers! The wait is finally over - the highly anticipated *** is now showing at CinemaWorld!
+          Come and experience this amazing film on our luxurious screens and state-of-the-art sound systems. Our team of experienced projectionists and sound engineers have worked tirelessly to ensure that every detail is perfect, so you can immerse yourself fully in this captivating movie.`;
+  var pageId = "113686078495248";
+
+  // Construct the API endpoint URL
+  var apiUrl =
+    "https://graph.facebook.com/v17.0/me?fields=id&access_token=" + accessToken;
+
+  // Set up the post data
+  var postData = {
+    message: postMessage,
+    access_token: accessToken,
+  };
+
+  // Send the post request
+  $.ajax({
+    url: apiUrl,
+    type: "POST",
+    data: postData,
+    success: function (response) {
+      alert("Post successfully sent!");
+    },
+    error: function (xhr, status, error) {
+      // Handle errors
+      $("#facebook-post").html("Error sending post to Facebook.");
+    },
+  });
+}
+
+// Attach the modified function to the "Share on Facebook" button's click event
+$(document).ready(function () {
+  $("#modal-3").on("click", ".btn-primary", function () {
+    postToFacebook();
+  });
+});
 
 /*let userCartPage = JSON.parse(localStorage.getItem("user"));
   userCartPage = getUserFromCartPage();
