@@ -2,11 +2,6 @@
   $(document).ready(function () {
     console.log("document ready index");
 
-    $("#content").on("click", "#buyNowButton", async function () {
-      // Redirect to the dynamically generated products.html page
-      router.navigateTo("products");
-    });
-
     setDialogHandler();
     setNavBarHandler();
     updateAuthButtons(); // Update the authentication buttons on page load
