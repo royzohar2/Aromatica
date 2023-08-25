@@ -31,7 +31,7 @@ $(document).ready(function () {
                     content += "<td><img src='" + perfume.image + "' alt='" + perfume.name + "' class='perfume-image'></td>";
                     content += "<td>" + perfume.name + "</td>";
                     content += "<td>" + perfume.brand + "</td>";
-                    content += "<td>$" + perfume.price + "</td>";
+                    content += "<td>₪" + perfume.price + "</td>";
                     content += "<td>" + perfume.category + "</td>";
 
                     content += "<td><button class='btn btn-danger delete-button' data-perfume-id='" + perfume._id + "'>Delete</button>";
@@ -88,6 +88,7 @@ $(document).ready(function () {
                 content += "<tbody>";
 
                 data.forEach(function (client) {
+                    console.log(client.roles);
                     content += "<tr>";
                     content += "<td>" + client.name + "</td>";
                     content += "<td>" + client.email + "</td>";
@@ -95,7 +96,6 @@ $(document).ready(function () {
                     //content += "<td>" + client.orders + "</td>";
                     var orderRow = ""
                     client.orders.forEach(function(order) {
-                        console.log(order);
                         orderRow +=  order + "\n";
          
                     });
@@ -447,7 +447,7 @@ $(document).ready(function () {
             user: {
                 name: $('#clientName').val(),
                 email: $('#clientEmail').val(),
-                roles: $('#clientRoles').val()
+                roles: $('#clientRoles').val().split(',')
             }
         };
 
