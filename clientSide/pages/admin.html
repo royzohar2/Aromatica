@@ -1,40 +1,138 @@
-<link rel="stylesheet" href="./css/admin.css" />
+<link rel="stylesheet" href="./css/admin.css">
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<body>
+<h1 class="text-center">Admin Page</h1>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <button id="order" class="btn btn-primary btn-block admin-option" data-option="order">Orders</button>
-            </div>
-            <div class="col-md-4">
-                <button id="client" class="btn btn-primary btn-block admin-option" data-option="client">Clients</button>
-            </div>
-            <div class="col-md-4">
-                <button id="product" class="btn btn-primary btn-block admin-option" data-option="product">Products</button>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <button id="order" class="btn btn-primary btn-lg btn-block admin-option">Orders</button>
         </div>
-    
-        <div class="admin-content">
-            <!-- Content from selected option will be loaded here -->
+        <div class="col-md-3">
+            <button id="client" class="btn btn-primary btn-lg btn-block admin-option">Clients</button>
         </div>
-    </div>
-
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Perfume Information</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                
-            </div>
+        <div class="col-md-3">
+            <button id="product" class="btn btn-primary btn-lg btn-block admin-option">Products</button>
+        </div>
+        <div class="col-md-3">
+            <button id="statistics" class="btn btn-primary btn-lg btn-block admin-option">Statistics</button>
         </div>
     </div>
+
+    <div class="admin-content">
+        <!-- Content from the selected option will be loaded here -->
+    </div>
+</div>
+
+
+<div id="editModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Perfume</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="productIdContainer" ></div>
+                <form id="editForm">
+                    <div class="form-group">
+                        <label for="perfumeName">Perfume Name</label>
+                        <input type="text" class="form-control" id="perfumeName" name="name" placeholder="Enter perfume name">
+                    </div>
+                    <div class="form-group">
+                        <label for="perfumeBrand">Perfume Brand</label>
+                        <input type="text" class="form-control" id="perfumeBrand" name="brand" placeholder="Enter perfume brand">
+                    </div>
+                    <div class="form-group">
+                        <label for="perfumeImage">Perfume Image</label>
+                        <input type="text" class="form-control" id="perfumeImage" name="image" placeholder="Enter image URL">
+                    </div>
+                    <div class="form-group">
+                        <label for="perfumePrice">Perfume Price</label>
+                        <input type="number" class="form-control" id="perfumePrice" name="price" placeholder="Enter perfume price">
+                    </div>
+                    <div class="form-group">
+                        <label for="perfumeCategory">Perfume Category</label>
+                        <input type="text" class="form-control" id="perfumeCategory" name="category" placeholder="Enter perfume category">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChangesProduct">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     
-    
+<div id="editClientModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Client</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="clientIdContainer"></div>
+                <form id="editClientForm">
+                    <div class="form-group">
+                        <label for="clientName">Name</label>
+                        <input type="text" class="form-control" id="clientName" placeholder="Enter client name">
+                    </div>
+                    <div class="form-group">
+                        <label for="clientEmail">Email</label>
+                        <input type="email" class="form-control" id="clientEmail" placeholder="Enter client email">
+                    </div>
+                    <div class="form-group">
+                        <label for="clientRoles">Roles (comma-separated)</label>
+                        <input type="text" class="form-control" id="clientRoles" placeholder="Enter client roles">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChangesClient">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editOrderModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="orderIdContainer"></div>
+                <form id="editOrderForm">
+                    <div class="order-details">
+                        <!-- Display order details here -->
+                    </div>
+                    <div class="product-list">
+                        <!-- Display product checkboxes here -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updateOrder">Update Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Include jQuery and Bootstrap JS -->
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
