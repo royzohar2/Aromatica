@@ -6,6 +6,9 @@ function parseJwt(token) {
 
 
 $(document).ready(function() {
+    $('#adminPageBtn').on('click', async function () {
+        router.navigateTo("admin")
+    });
     $('#userInfoBtn').click(function() {
         var token = localStorage.getItem("token");
         console.log(token);

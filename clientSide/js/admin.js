@@ -1,7 +1,9 @@
 
 $(document).ready(function () {
     const token = localStorage.getItem("token");
-
+    $('#statistics').on('click', async function () {
+        router.navigateTo("statistics")
+    });
     /////////////////////////// product /////////////////////////////////////
     $('#product').click(function () {
         console.log("2") 
@@ -138,6 +140,8 @@ $(document).ready(function () {
                 Authorization: `Bearer ${token}`
             },
             success: function (data) {
+                console.log("11");
+
                 var content = "<h3>Orders Content</h3>";
                 content += "<table class='table table-bordered'>";
                 content += "<thead>";
