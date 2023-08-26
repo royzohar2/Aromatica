@@ -64,6 +64,13 @@
     }
   }
 
+  /*function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(atob(base64));
+  }*/
+  
+
   async function login(email, password) {
     // Make an AJAX POST request using async/await
     const response = await $.ajax({
@@ -78,6 +85,11 @@
     }
     // Store the token in local storage
     localStorage.setItem("token", response.token);
+    //const decodedToken = parseJwt(response.token);
+    //console.log('Decoded Token:', decodedToken);
+   // if (decodedToken && decodedToken.sub) {
+    //  localStorage.setItem("userId", decodedToken.sub);
+    //}
   }
 
   async function handleSignupFormSubmit(event) {
