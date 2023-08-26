@@ -26,7 +26,7 @@ const createOrder = async (req, res, next) => {
   try {
     const order = req.body;
     const userId = req.locals.currentUserId;
-    console.log(order);
+    //console.log(order);
     const newOrder = await orderService.createOrder(order, userId);
     const user = await usersService.getUserById(userId);
     user.orders.push(newOrder._id);
@@ -78,6 +78,10 @@ const deleteOrder = async (req, res) => {
     if (!id) {
       res.send("no order id");
     }
+    const deletedOrder = await orderService.getOrderById(id);
+    const user = await usersService.getUserById(deletedOrder.user);
+    user.orders.pull(deletedOrder._id);
+    await usersService.updateUser(user._id, user);
     // Delete the order
     await orderService.deleteOrder(id);
     res.status(200).send("order deleted successfully");
