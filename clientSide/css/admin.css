@@ -5,22 +5,29 @@
 
 /* Style for the perfume table */
 .table-bordered {
+    border-collapse: collapse;
     border: 1px solid #dee2e6;
+    width: 100%;
 }
 
 /* Style for the perfume table header */
 .table-bordered thead th {
     border: 1px solid #dee2e6;
     background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
 }
 
 /* Style for the perfume table rows */
 .table-bordered tbody td {
     border: 1px solid #dee2e6;
+    padding: 10px;
 }
 
 /* Style for the perfume images */
 .perfume-image {
     max-width: 80px;
     max-height: 80px;
+    display: block;
+    margin: 0 auto;
 }
