@@ -237,14 +237,13 @@ function calculateTotalAmount(cartItems) {
 function postToFacebook() {
   //https://developers.facebook.com/tools/explorer/?method=POST&path=me%3Ffields%3Did%2Cemail&version=v17.0
   const accessToken =
-    "EAALhZBWgmOlQBOZCkHNl1xXMncXvPS3hSU3dxTasdVMOgARkMWlAntJ8ODTlZBxYP9itjoHzEWfahRFtQ8S0gTquF8eunqwkPYH1NbjDJrywRZADBkzehJ7AG8q05Jnoka6nmGtk9MZBhBGRye1jlgKAUd5EPZCc4hIa7PfQaXczfNibW3QdSveWi9S6wJFhUZCQmHcBda34FpFZAZBtePWRPj8cZD";
-  const postMessage = `Attention all Kiotor lovers! The wait is finally over - the highly anticipated *** is now showing at CinemaWorld!
-          Come and experience this amazing film on our luxurious screens and state-of-the-art sound systems. Our team of experienced projectionists and sound engineers have worked tirelessly to ensure that every detail is perfect, so you can immerse yourself fully in this captivating movie.`;
-  var pageId = "113686078495248";
+    "EAALwPnPZAxs0BOwxrsRrA8O76ILuKsoHIXyZBV7J2zqjrof4GOfZB3hKt3pWn0UIhrQtiZBulnwhJawbd0N1Ku7O27Wpc9YIKEZAyEtt1ya4CZAOgYelyvahzw38DHRY7rThmZBRZAVrCRVRbhnZBPi7TdWVylGyDhmC7HSelm8gMB0lNZAHncWevWyTKegiTxcYiIwJfqturiTenLSZCthtiGAHvUZD";
+  const postMessage = `messege`;
+  var pageId = "113961755135291";
 
   // Construct the API endpoint URL
   var apiUrl =
-    "https://graph.facebook.com/v17.0/me?fields=id&access_token=" + accessToken;
+  "https://graph.facebook.com/v16.0/" + pageId + "/feed";
 
   // Set up the post data
   var postData = {

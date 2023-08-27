@@ -11,10 +11,11 @@
     transform: scale(1.1); /* Adjust the scale factor as needed */
   }
 
-h5 {
+h9 {
     margin-bottom: 10px;
     font-size: 14px;
     font-weight: 400;
+    font-family: Alef;
 }
 
 h1 {
