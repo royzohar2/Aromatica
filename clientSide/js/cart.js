@@ -1,13 +1,14 @@
 $(document).ready(function () {
+  // Remove the setInterval code that updates the cart display every second
   const urlParams = new URLSearchParams(window.location.search);
   const cartUpdated = urlParams.get("cartUpdated");
+ 
 
   if (cartUpdated) {
     updateCart();
   }
 
-  // Update the cart display every 1 second
-  setInterval(updateCart, 1000);
+  updateCart();
 });
 
 function updateCart() {
@@ -15,22 +16,23 @@ function updateCart() {
   const cartTable = $("#cart-table");
   const emptyCartMessage = $("#empty-cart-message");
   const totalAmountSpan = $("#total-amount");
+  
 
   console.log("Loading cart items from localStorage...");
 
   const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
-  console.log("Retrieved cart items:", cartItems);
 
   let totalAmount = 0;
 
   cartList.empty(); // Clear existing content
 
   for (const productName in cartItems) {
-    const { quantity, price, imageSrc } = cartItems[productName];
-
+    const { quantity, price, imageSrc ,productId} = cartItems[productName];
+    
     totalAmount += quantity * price;
 
     const cartItem = $("<tr>").appendTo(cartList);
+    
 
     $("<td>")
       .addClass("product-remove")
@@ -50,16 +52,16 @@ function updateCart() {
     // Create the cell for the product image
     $("<td>").addClass("product-image").appendTo(cartItem).append(
       $("<img>")
-        .addClass("img-fluid cart-image") // Add a class for styling
-        .attr("src", imageSrc) // Set the image source here
-        .attr("alt", productName) // Provide an alt text for accessibility
+        .addClass("img-fluid cart-image")
+        .attr("src", imageSrc) 
+        .attr("alt", productName) 
     );
 
     $("<td>").addClass("product-name").appendTo(cartItem).append(
       $("<a>")
         .attr(
           "href",
-          `http://127.0.0.1:5501/clientSide/index.html?#product?id=64d292c6dd6f34d72552ed4e`
+          `http://127.0.0.1:5501/clientSide/index.html?#product?id=${productId}`
         ) // No href, use javascript:void(0)
         .text(productName)
     );
@@ -109,7 +111,7 @@ function updateCart() {
               .click(function () {
                 cartItems[productName].quantity++;
                 localStorage.setItem("cartItems", JSON.stringify(cartItems));
-                updateCart();
+                updateCart(); // Call updateCart after increasing the quantity
               })
           )
       );
@@ -126,6 +128,18 @@ function updateCart() {
             ).toFixed(2)}</bdi>`
           )
       );
+    // Add "Move to Wishlist" button
+    /*const moveToWishlistButton = $("<button>")
+      .text("Move to Wishlist")
+      .addClass("btn btn-secondary move-to-wishlist")
+      .click(function () {
+        moveItemToWishlist(productName);
+      });
+
+    $("<td>")
+      .addClass("product-move-to-wishlist")
+      .appendTo(cartItem)
+      .append(moveToWishlistButton);*/
   }
 
   totalAmountSpan.text(totalAmount.toFixed(2));
@@ -140,6 +154,8 @@ function updateCart() {
 
   console.log("Finished loading cart items.");
 }
+
+
 
 function shopNow() {
   // Check if the user is logged in
@@ -173,7 +189,7 @@ function shopNow() {
   // Create an object with order details
   const orderData = {
     products: productsId,
-    totalAmount: calculateTotalAmount(cartItems),
+    totalAmount: calculateTotalAmount(orderItems),
   };
 
   // Send the order data to the server
@@ -181,10 +197,7 @@ function shopNow() {
     type: "POST",
     url: "http://localhost:3000/order",
     contentType: "application/json",
-    data: JSON.stringify({
-      items: orderItems,
-      totalAmount: totalAmount,
-    }),
+    data: JSON.stringify(orderData),
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -261,19 +274,40 @@ $(document).ready(function () {
   });
 });
 
-/*let userCartPage = JSON.parse(localStorage.getItem("user"));
-  userCartPage = getUserFromCartPage();
 
-async function getUserFromCartPage() {
-  $.ajax({
-    url: "http://localhost:3000/account/email/",
-    method: "GET",
-    success: function (response) {
-      userCartPage = response;
-      // Perform any additional actions with the response data here
-    },
-    error: function (xhr) {
-      // Handle the error
-    },
-  });
-}*/
+
+function sendToWishListPage() {
+  window.location.href = "pages/wishList.html";
+}
+
+function moveItemToWishlist(productName) {
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
+  const wishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || {};
+
+  if (cartItems[productName]) {
+    wishlistItems[productName] = cartItems[productName];
+    delete cartItems[productName];
+
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    localStorage.setItem("wishlistItems", JSON.stringify(wishlistItems));
+
+    updateCart();
+  }
+}
+
+function moveToCart(productName) {
+  const wishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || {};
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
+
+  if (wishlistItems[productName]) {
+    cartItems[productName] = wishlistItems[productName];
+    delete wishlistItems[productName];
+
+    localStorage.setItem("wishlistItems", JSON.stringify(wishlistItems));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+    updateCart();
+  }
+}
+
+
