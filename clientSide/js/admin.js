@@ -190,6 +190,8 @@ $(document).ready(function () {
                                 content += "<button class='btn btn-primary edit-order ml-2' data-order-id='" + order._id + "'>Edit</button>";
                                 content += "</td>";
                                 content += "</tr>";
+                                $('.admin-content').html(content);
+
                                 count++;
         
                                 if (count === data.length) {
