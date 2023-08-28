@@ -152,13 +152,13 @@
 
     if (token) {
       // User is logged in
-      $('#profileicon').show();
+      $("#profileicon").show();
       $("#loginButton").hide();
       $("#signupButton").hide();
       $("#logoutButton").show();
     } else {
       // User is logged out
-      $('#profileicon').hide();
+      $("#profileicon").hide();
       $("#loginButton").show();
       $("#signupButton").show();
       $("#logoutButton").hide();
