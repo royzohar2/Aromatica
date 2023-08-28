@@ -5,3 +5,147 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <h1 class="text-center">statistics Page</h1>
+
+<!-- Include D3.js Library -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<!-- Create a container for the chart -->
+<div id="salesChartContainer">
+    <h2>Total sales in relation to days</h2> <!-- Header added here -->
+    <div id="salesChart"></div>
+  </div>
+
+<script>
+    const token = localStorage.getItem("token");
+  // Fetch sales data by date using AJAX
+  $.ajax({
+    url: "http://localhost:3000/statistic/sales-by-date",
+    method: "GET",
+    headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    success: function (salesData) {
+      // Restructure data for D3
+      const formattedData = salesData.map(sale => ({
+        date: new Date(sale._id),
+        totalSales: sale.totalSales
+      }));
+
+      const last7DaysData = formattedData.slice(-7);
+
+      // Set up dimensions for the chart
+      const margin = { top: 20, right: 20, bottom: 30, left: 40 },
+        width = 600 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+      // Create SVG element
+      const svg = d3.select("#salesChart").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      // Set up scales
+      const x = d3.scaleTime().range([0, width]);
+      const y = d3.scaleLinear().range([height, 0]);
+
+      x.domain(d3.extent(last7DaysData, d => d.date)); // Set x domain from min to max date
+      y.domain([0, d3.max(last7DaysData, d => d.totalSales)]);
+
+      // Create line generator
+      const line = d3.line()
+        .x(d => x(d.date))
+        .y(d => y(d.totalSales));
+
+      // Append line to SVG
+      svg.append("path")
+        .datum(last7DaysData)
+        .attr("class", "line")
+        .attr("d", line) // Generate path for the last 7 days data
+        .style("stroke", "black") // Set line color to black
+        .style("fill", "none") // Remove fill
+
+      // Append x-axis and y-axis
+      svg.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+      svg.append("g")
+        .attr("class", "y-axis")
+        .call(d3.axisLeft(y));
+    },
+    error: function () {
+      console.error("Error fetching sales data.");
+    }
+  });
+</script>
+
+
+
+<!-- Create a container for the bar chart -->
+<div id="barChartContainer">
+  <h2>Product Sales</h2> <!-- Header added here -->
+  <div id="barChart"></div>
+</div>
+
+<script>
+
+  // Fetch product sales data using AJAX
+  $.ajax({
+    url: "http://localhost:3000/statistic/product-info",
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    success: function (productsInfo) {
+      // Set up dimensions for the chart
+      const margin = { top: 20, right: 20, bottom: 30, left: 40 },
+        width = 600 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+      // Create SVG element
+      const svg = d3.select("#barChart").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      // Set up scales
+      const x = d3.scaleBand().range([0, width]).padding(0.1);
+      const y = d3.scaleLinear().range([height, 0]);
+
+      // Map product names to x domain and quantities to y domain
+      x.domain(productsInfo.map(product => product.name));
+      y.domain([0, d3.max(productsInfo, product => product.numberOfPurchase)]);
+
+      // Append bars to SVG
+      svg.selectAll(".bar")
+        .data(productsInfo)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", product => x(product.name))
+        .attr("width", x.bandwidth())
+        .attr("y", product => y(product.numberOfPurchase))
+        .attr("height", product => height - y(product.numberOfPurchase));
+
+      // Append x-axis and y-axis
+      svg.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-0.8em")
+        .attr("dy", "-0.15em")
+        .attr("transform", "rotate(-65)");
+
+      svg.append("g")
+        .attr("class", "y-axis")
+        .call(d3.axisLeft(y));
+    },
+    error: function () {
+      console.error("Error fetching product sales data.");
+    },
+  });
+</script>
