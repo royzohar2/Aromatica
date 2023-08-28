@@ -1,9 +1,8 @@
-let productId;
 $(document).ready(function () {
   const searchResultsContainer = $("#searchResults");
   searchResultsContainer.empty();
 
-  productId = router.getParams().replace("id=", "");
+  const productId = router.getParams().replace("id=", "");
   console.log("Product ID:", productId);
 
   // Fetch product details from the server
@@ -16,21 +15,19 @@ $(document).ready(function () {
       $("#product-name").text(product.name);
       $("#product-brand").text(`Brand: ${product.brand}`);
       $("#product-price").text(`Price: ₪${product.price}`);
-    }
-  })
-
-  $('#add-to-cart').click(function () {
-    addToCart()
+    },
   });
 
+  $("#add-to-cart").click(function () {
+    addToCart(productId);
+  });
 });
 
-function addToCart() {
+function addToCart(productId) {
   const productImage = $("#product-image").attr("src");
   const productName = $("#product-name").text();
   const productPriceStr = $("#product-price").text();
   const productPrice = parseFloat(productPriceStr.replace("Price: ₪", ""));
-
 
   // Check if the user is logged in
   if (!isUserLoggedIn()) {
@@ -38,7 +35,7 @@ function addToCart() {
     // Redirect to the login page or display a login modal
     return;
   }
-  console.log(productId)
+  console.log(productId);
   // Check if the product already exists in the cart
   const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
   if (cartItems[productName]) {
@@ -64,4 +61,3 @@ function isUserLoggedIn() {
   const token = localStorage.getItem("token");
   return token !== null;
 }
-
