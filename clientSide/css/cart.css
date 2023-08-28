@@ -166,3 +166,7 @@ body {
   max-width: 60px; /* Adjust the size as needed */
   max-height: 60px; /* Adjust the size as needed */
 }
+
+#support {
+  text-align: center; /* Aligns the text horizontally */
+}
