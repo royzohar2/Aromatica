@@ -7,10 +7,10 @@ const cors = require("cors");
 const PORT = 3000;
 
 // define the communication between the host and server
-// const http = require("http");
-// const socketIo = require("socket.io");
-// const server = http.createServer(app);
-// const io = socketIo(server);
+const http = require("http");
+const socketIo = require("socket.io");
+const server = http.createServer(app);
+const io = socketIo(server);
 // const { handleClient } = require("./utills/socket");
 // handleClient(io);
 
@@ -29,6 +29,19 @@ app.use("/statistic", require("./routes/statisticsRoute"));
 app.use("/point", require("./routes/pointsRoute"));
 app.use("/currency", require("./routes/currencyRoute"));
 
+io.on("connection", (socket) => {
+  console.log("Client connected:", socket.id);
+
+  // Listen for the "orderCreated" event
+  socket.on("orderCreated", (order) => {
+    console.log("Order created:", order);
+
+    // Emit the "orderConfirmation" event to the client
+    socket.emit("orderConfirmation", "Your order has been confirmed!");
+  });
+});
+
+
 // Connect to the MongoDB database
 mongoose.connect(
   "mongodb+srv://adimor87:205851587@cluster0.povfaxl.mongodb.net/",
@@ -45,4 +58,8 @@ mongoose.connection.once("open", () => {
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+});
+
+server.listen(3005,()=>{
+  console.log(`ServerSocket is running on port 3005`);
 });
