@@ -18,6 +18,11 @@ $(document).ready(function () {
       $("#product-price").text(`Price: ₪${product.price}`);
     }
   })
+
+  $('#add-to-cart').click(function () {
+    addToCart()
+  });
+
 });
 
 function addToCart() {
@@ -33,6 +38,7 @@ function addToCart() {
     // Redirect to the login page or display a login modal
     return;
   }
+  console.log(productId)
   // Check if the product already exists in the cart
   const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
   if (cartItems[productName]) {
