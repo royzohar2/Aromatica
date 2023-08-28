@@ -1,22 +1,48 @@
+let socket;
+
 $(document).ready(function () {
   // Remove the setInterval code that updates the cart display every second
   const urlParams = new URLSearchParams(window.location.search);
   const cartUpdated = urlParams.get("cartUpdated");
- 
 
   if (cartUpdated) {
     updateCart();
   }
 
   updateCart();
+
+  // Connect to the WebSocket server
+  socket = io("http://localhost:3005", {
+    transports: ["websocket"],
+  });
+  // Listen for the "orderConfirmation" event
+  socket.on("connect", function () {
+    console.log("Connected to socket.io server");
+    socket.emit("message", "Hello World from client");
+  });
+
+  socket.on("orderConfirmation", function (message) {
+    console.log("Recive messege:", message);
+    appendMessageToModal(message , 5000);
+  });
 });
+
+// Define the function to append a message to the modal and show it with a delay
+function appendMessageToModal(message, delayMilliseconds) {
+  setTimeout(function () {
+    const orderConfirmationMessageElement = document.getElementById("orderConfirmationMessage");
+    const orderConfirmationModal = new bootstrap.Modal(document.getElementById("orderConfirmationModal"));
+
+    orderConfirmationMessageElement.textContent = message;
+    orderConfirmationModal.show();
+  }, delayMilliseconds);
+}
 
 function updateCart() {
   const cartList = $("#cart");
   const cartTable = $("#cart-table");
   const emptyCartMessage = $("#empty-cart-message");
   const totalAmountSpan = $("#total-amount");
-  
 
   console.log("Loading cart items from localStorage...");
 
@@ -27,12 +53,11 @@ function updateCart() {
   cartList.empty(); // Clear existing content
 
   for (const productName in cartItems) {
-    const { quantity, price, imageSrc ,productId} = cartItems[productName];
-    
+    const { quantity, price, imageSrc} = cartItems[productName];
+
     totalAmount += quantity * price;
 
     const cartItem = $("<tr>").appendTo(cartList);
-    
 
     $("<td>")
       .addClass("product-remove")
@@ -50,21 +75,17 @@ function updateCart() {
       );
 
     // Create the cell for the product image
-    $("<td>").addClass("product-image").appendTo(cartItem).append(
-      $("<img>")
-        .addClass("img-fluid cart-image")
-        .attr("src", imageSrc) 
-        .attr("alt", productName) 
-    );
+    $("<td>")
+      .addClass("product-image")
+      .appendTo(cartItem)
+      .append(
+        $("<img>")
+          .addClass("img-fluid cart-image")
+          .attr("src", imageSrc)
+          .attr("alt", productName)
+      );
 
-    $("<td>").addClass("product-name").appendTo(cartItem).append(
-      $("<a>")
-        .attr(
-          "href",
-          `http://127.0.0.1:5501/clientSide/index.html?#product?id=${productId}`
-        ) // No href, use javascript:void(0)
-        .text(productName)
-    );
+    $("<td>").addClass("product-name").appendTo(cartItem).text(productName);
 
     $("<td>")
       .addClass("product-price")
@@ -128,18 +149,6 @@ function updateCart() {
             ).toFixed(2)}</bdi>`
           )
       );
-    // Add "Move to Wishlist" button
-    /*const moveToWishlistButton = $("<button>")
-      .text("Move to Wishlist")
-      .addClass("btn btn-secondary move-to-wishlist")
-      .click(function () {
-        moveItemToWishlist(productName);
-      });
-
-    $("<td>")
-      .addClass("product-move-to-wishlist")
-      .appendTo(cartItem)
-      .append(moveToWishlistButton);*/
   }
 
   totalAmountSpan.text(totalAmount.toFixed(2));
@@ -154,8 +163,6 @@ function updateCart() {
 
   console.log("Finished loading cart items.");
 }
-
-
 
 function shopNow() {
   // Check if the user is logged in
@@ -185,14 +192,13 @@ function shopNow() {
       productId,
     };
   });
-  
+
   const productsId = [];
   orderItems.forEach((product) => {
     for (let i = 0; i < product.quantity; i++) {
       productsId.push(product.productId);
     }
   });
-  
 
   // Create an object with order details
   const orderData = {
@@ -211,6 +217,9 @@ function shopNow() {
     },
     success: function (response) {
       console.log("Order saved successfully:", response);
+
+      // Emit the "orderCreated" event to trigger the order confirmation message
+      socket.emit("orderCreated", orderData);
 
       // Clear the cart in local storage
       localStorage.removeItem("cartItems");
@@ -245,13 +254,12 @@ function calculateTotalAmount(cartItems) {
 function postToFacebook() {
   //https://developers.facebook.com/tools/explorer/?method=POST&path=me%3Ffields%3Did%2Cemail&version=v17.0
   const accessToken =
-    "EAALwPnPZAxs0BOwxrsRrA8O76ILuKsoHIXyZBV7J2zqjrof4GOfZB3hKt3pWn0UIhrQtiZBulnwhJawbd0N1Ku7O27Wpc9YIKEZAyEtt1ya4CZAOgYelyvahzw38DHRY7rThmZBRZAVrCRVRbhnZBPi7TdWVylGyDhmC7HSelm8gMB0lNZAHncWevWyTKegiTxcYiIwJfqturiTenLSZCthtiGAHvUZD";
+    "EAALwPnPZAxs0BO54ZBEo7gtJRzVnPLksKmfO19XayRsd2GghPoFXtr9GQ9ihKYfLG3GnziFlpre0PTSnNccVulwJxBZB1Lt4q0vO5btunEOIEdXa4dxwSZAedZBDNipxkvvl3RDfTUzh2jRJZAquQAgPeFz8LMSDSdHiliyBMi2ZBWz0QYZAPqzSKRzTAZBwNoHfLRTeQEermmdAV2xEsQELNqjAZD";
   const postMessage = `messege`;
   var pageId = "113961755135291";
 
   // Construct the API endpoint URL
-  var apiUrl =
-  "https://graph.facebook.com/v16.0/" + pageId + "/feed";
+  var apiUrl = "https://graph.facebook.com/v16.0/" + pageId + "/feed";
 
   // Set up the post data
   var postData = {
@@ -280,41 +288,3 @@ $(document).ready(function () {
     postToFacebook();
   });
 });
-
-
-
-function sendToWishListPage() {
-  window.location.href = "pages/wishList.html";
-}
-
-function moveItemToWishlist(productName) {
-  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
-  const wishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || {};
-
-  if (cartItems[productName]) {
-    wishlistItems[productName] = cartItems[productName];
-    delete cartItems[productName];
-
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    localStorage.setItem("wishlistItems", JSON.stringify(wishlistItems));
-
-    updateCart();
-  }
-}
-
-function moveToCart(productName) {
-  const wishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || {};
-  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
-
-  if (wishlistItems[productName]) {
-    cartItems[productName] = wishlistItems[productName];
-    delete wishlistItems[productName];
-
-    localStorage.setItem("wishlistItems", JSON.stringify(wishlistItems));
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-    updateCart();
-  }
-}
-
-
