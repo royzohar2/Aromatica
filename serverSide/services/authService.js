@@ -29,16 +29,18 @@ async function registerUser(userData) {
 
 // Function to log in a user and generate a JWT token
 async function loginUser(email, password) {
+  // Find a user with the provided email
   const user = await User.findOne({ email });
-
+  // If user doesn't exist or password doesn't match, throw an error
   if (!user || !(await bcrypt.compare(password, user.password))) {
     throw new Error("Invalid email or password");
   }
+  // Prepare payload for creating a JWT token
   const payload = {
     userId: user._id,
   };
-  //The JWT token generated during login includes the user's userId and expires after 1 hour.
-  console.log(process.env.jwtSecret);
+  // Create a JWT token with the payload and a secret key
+  // The token will expire after 24 hours (1 day)
   const token = jwt.sign(payload, JWT_SECRET, {
     expiresIn: "24h",
   });
