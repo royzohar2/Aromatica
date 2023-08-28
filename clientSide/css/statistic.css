@@ -1,0 +1,12 @@
+#salesChartContainer,
+#barChartContainer {
+    display: inline-block;
+    width: 50%; /* Set both containers to take 50% width of the screen */
+    vertical-align: top; /* Align containers at the top */
+    padding: 20px;
+}
+
+#barChartContainer {
+    border-left: 1px solid #ccc; /* Add a separator between the charts */
+    padding-left: 40px; /* Adjust padding for spacing */
+}
