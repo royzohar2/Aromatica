@@ -4,8 +4,49 @@ function parseJwt(token) {
     return JSON.parse(atob(base64));
   }
 
+  function getUserRole() {
+      return new Promise((resolve, reject) => {
+          var token = localStorage.getItem("token");
+          const decodedToken = parseJwt(token);
+          var userId = decodedToken.userId;
+            console.log(userId);
+          $.ajax({
+              url: `http://localhost:3000/account/${userId}`,
+              method: 'GET',
+              headers: {
+                  Authorization: `Bearer ${token}`
+              },
+              success: function(data) {
+                  resolve(data.roles.length);
+              },
+              error: function() {
+                  reject(new Error('Error fetching user profile information.'));
+              }
+          });
+      });
+  }  
+
+
 
 $(document).ready(function() {
+    getUserRole()
+        .then(rolesLength => {
+            console.log(rolesLength);
+
+            // Now you can use rolesLength to determine if the user is an admin
+            if (rolesLength > 1) {
+                $('#adminPageBtn').show(); // Show the button for admins
+            } else {
+                $('#adminPageBtn').hide(); // Hide the button for non-admins
+            }
+
+        })
+        .catch(error => {
+            console.log(error.message);
+        });
+
+
+
     $('#adminPageBtn').on('click', async function () {
         router.navigateTo("admin")
     });

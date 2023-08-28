@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    const searchResultsContainer = $("#searchResults");
+    searchResultsContainer.empty();
+    
     const productId = router.getParams().replace("id=", "");
     console.log("Product ID:", productId);
   
