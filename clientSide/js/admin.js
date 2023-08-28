@@ -241,6 +241,8 @@ $(document).ready(function () {
             },
             error: function (error) {
                 console.error("Error deleting perfume:", error);
+                alert("Error deleting perfume. Please try again later.");
+
             }
         });
     }
@@ -338,6 +340,8 @@ $(document).ready(function () {
                 },
                 error: function(error) {
                     console.log('Error saving data:', error);
+                    alert("Error saving data. incorrect input.");
+
                 }
             });
 
@@ -372,6 +376,8 @@ $(document).ready(function () {
                 },
                 error: function(error) {
                     console.log('Error saving data:', error);
+                    alert("Error saving data. incorrect input.");
+
                 }
             });
         }
@@ -393,6 +399,8 @@ $(document).ready(function () {
             },
             error: function (error) {
                 console.error("Error deleting client:", error);
+                alert("Error deleting client. Please try again later.");
+
             }
         });
     }
@@ -472,6 +480,8 @@ $(document).ready(function () {
             },
             error: function(error) {
                 console.log('Error updating client:', error);
+                alert("Error updating client. incorrect input.");
+
             }
         });
         
@@ -493,6 +503,8 @@ function deleteOrder(orderId) {
         },
         error: function (error) {
             console.error("Error deleting order:", error);
+            alert("Error deleting client. Please try again later.");
+
         }
     });
 }
@@ -633,6 +645,8 @@ function updateOrderWithRemovedProducts(orderId, allProducts, removedProducts) {
                     data: updatedOrder,
                     error: function (error) {
                         console.error("Error updating order:", error);
+                        alert("Error updating client. Please try again later.");
+
                     }
                 });
 

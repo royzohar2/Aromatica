@@ -4,12 +4,11 @@ const usersController = require("../controllers/usersController");
 const authMiddleware = require("../middlewares/auth-middleware");
 
 // Routes for managing users
-router.use(authMiddleware.requireRole("admin"));
-router.get("/", usersController.getAllUsers);
+router.get("/", authMiddleware.requireRole("admin") , usersController.getAllUsers);
 //router.get("/:id", usersController.getUserById);
-router.get("/email/:email", usersController.getUserByEmail);
-router.patch("/update", usersController.updateUser);
-router.delete("/delete", usersController.deleteUser);
+router.get("/email/:email",authMiddleware.requireRole("admin"), usersController.getUserByEmail);
+router.patch("/update",authMiddleware.requireRole("admin"), usersController.updateUser);
+router.delete("/delete", authMiddleware.requireRole("admin"),usersController.deleteUser);
 
 router.get(
   "/:id",
