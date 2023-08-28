@@ -185,7 +185,15 @@ function shopNow() {
       productId,
     };
   });
-  const productsId = orderItems.map((product) => product.productId);
+  
+  const productsId = [];
+  orderItems.forEach((product) => {
+    for (let i = 0; i < product.quantity; i++) {
+      productsId.push(product.productId);
+    }
+  });
+  
+
   // Create an object with order details
   const orderData = {
     products: productsId,
