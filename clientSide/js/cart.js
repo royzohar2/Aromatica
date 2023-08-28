@@ -255,7 +255,7 @@ function postToFacebook() {
   //https://developers.facebook.com/tools/explorer/?method=POST&path=me%3Ffields%3Did%2Cemail&version=v17.0
   const accessToken =
     "EAALwPnPZAxs0BO54ZBEo7gtJRzVnPLksKmfO19XayRsd2GghPoFXtr9GQ9ihKYfLG3GnziFlpre0PTSnNccVulwJxBZB1Lt4q0vO5btunEOIEdXa4dxwSZAedZBDNipxkvvl3RDfTUzh2jRJZAquQAgPeFz8LMSDSdHiliyBMi2ZBWz0QYZAPqzSKRzTAZBwNoHfLRTeQEermmdAV2xEsQELNqjAZD";
-  const postMessage = `messege`;
+  const postMessage = `"🎉 Exciting News! 🎉 We just made one more happy customer with our latest product! Don't miss out – hurry up before we run out of stock! 🏃‍♂️🛍️ Grab yours now and experience the magic yourself. 🔥👇 http://127.0.0.1:5501/clientSide/index.html#home`;
   var pageId = "113961755135291";
 
   // Construct the API endpoint URL
