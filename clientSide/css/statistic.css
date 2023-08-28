@@ -1,12 +1,77 @@
-#salesChartContainer,
-#barChartContainer {
-    display: inline-block;
-    width: 50%; /* Set both containers to take 50% width of the screen */
-    vertical-align: top; /* Align containers at the top */
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Apply a background color to the body */
+  body {
+    background-color: #f7f7f7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: "Quicksand", sans-serif;
+  }
+  
+  /* Center the title */
+  h1.text-center {
+    text-align: center;
     padding: 20px;
-}
-
-#barChartContainer {
-    border-left: 1px solid #ccc; /* Add a separator between the charts */
-    padding-left: 40px; /* Adjust padding for spacing */
-}
+  }
+  
+  /* Style the chart containers */
+  #salesChartContainer,
+  #barChartContainer,
+  #bubbleChartContainer {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+  }
+  
+  /* Style the chart headers */
+  #salesChartContainer h2,
+  #barChartContainer h2,
+  #bubbleChartContainer h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  /* Style the charts */
+  #salesChart svg,
+  #barChart svg,
+  #bubbleChart svg {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  /* Style the legend */
+  #legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  /* Style the individual legend items */
+  .legend {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+  }
+  
+  /* Style the colored rectangle in the legend */
+  .legend div:first-child {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+  
+  /* Style the brand name in the legend */
+  .legend div:last-child {
+    font-size: 14px;
+  }
+  
+  /* Add more specific styles as needed */
+  

@@ -47,8 +47,8 @@ function renderPerfumes(perfumes, exchangeRate) {
           <p>for ${perfume.category}</p>
           <p>Price: ₪${priceInShekels} | $${priceInDollars}</p>
         </p>
-        <a href="#" class="btn btn-dark" onclick="addToCart('${perfume.name}', ${perfume.price}, '${perfume.image}','${perfume._id}')">Add To Cart</a>
-      </div>
+        <button class="btn btn-dark" onclick="addToCart('${perfume.name}', ${perfume.price}, '${perfume.image}','${perfume._id}')">Add To Cart</button>
+        </div>
     </div>
   </div>`;
 

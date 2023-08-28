@@ -4,7 +4,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-<h1 class="text-center">statistics Page</h1>
+<h1 class="text-center">Dashboard</h1>
 
 <!-- Include D3.js Library -->
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -66,7 +66,7 @@
         .datum(last7DaysData)
         .attr("class", "line")
         .attr("d", line) // Generate path for the last 7 days data
-        .style("stroke", "black") // Set line color to black
+        .style("stroke", "#17B169") // Set line color to green
         .style("fill", "none") // Remove fill
 
       // Append x-axis and y-axis
@@ -128,7 +128,9 @@
         .attr("x", data => x(data._id.toString()))
         .attr("width", x.bandwidth())
         .attr("y", data => y(data.ordersCount))
-        .attr("height", data => height - y(data.ordersCount));
+        .attr("height", data => height - y(data.ordersCount))
+        .style("fill", "#17B169"); 
+        
 
       // Add labels to bars
       bars.append("text")

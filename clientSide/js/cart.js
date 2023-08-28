@@ -216,7 +216,7 @@ function shopNow() {
       Authorization: `Bearer ${token}`,
     },
     success: function (response) {
-      console.log("Order saved successfully:", response);
+      //console.log("Order saved successfully:", response);
 
       // Emit the "orderCreated" event to trigger the order confirmation message
       socket.emit("orderCreated", orderData);
