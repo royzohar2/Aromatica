@@ -69,7 +69,7 @@
     var password = $("#password").val();
 
     if (!email || !password) {
-      alert("Invalid email or password.");
+      alert("missing fileds.");
       return;
     }
 
