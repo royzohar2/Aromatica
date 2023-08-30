@@ -110,6 +110,12 @@
     var email = $("#signupEmail").val();
     var password = $("#signupPassword").val();
 
+    // Check if password is at least 6 characters long
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long.");
+      return;
+    }
+
     if (!name || !email || !password) {
       alert("Please fill in all fields.");
       return;

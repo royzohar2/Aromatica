@@ -17,6 +17,12 @@ async function registerUser(req, res) {
   if (!emailRegex.test(email)) {
     return res.status(400).json({ error: "Invalid email format." });
   }
+  // Password validation
+  if (password.length < 6) {
+    return res
+      .status(400)
+      .json({ error: "Password must be at least 6 characters long." });
+  }
 
   if (!name || !email || !password) {
     return res.status(400).json({ error: "Missing fields" });
