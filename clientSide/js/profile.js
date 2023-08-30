@@ -47,11 +47,11 @@ $(document).ready(function () {
   });
   $("#userInfoBtn").click(function () {
     var token = localStorage.getItem("token");
-    console.log(token);
+    //console.log(token);
     const decodedToken = parseJwt(token);
-    console.log("Decoded Token:", decodedToken);
+    //console.log("Decoded Token:", decodedToken);
     var userId = decodedToken.userId;
-    console.log(userId);
+    //console.log(userId);
 
     $.ajax({
       url: `http://localhost:3000/account/${userId}`,

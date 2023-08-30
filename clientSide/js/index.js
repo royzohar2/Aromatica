@@ -76,7 +76,7 @@
     try {
       await login(email, password);
       updateAuthButtons(); // Update the authentication buttons
-      //alert("Login successful!");
+      alert("Login successful!");
       $("#loginModal").modal("hide"); // Close the modal after successful login
       $("#email").val("");
       $("#password").val("");

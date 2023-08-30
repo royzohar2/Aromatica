@@ -6,7 +6,7 @@ $(document).ready(function () {
     });
     /////////////////////////// product /////////////////////////////////////
     $('#product').click(function () {
-        console.log("2") 
+        //console.log("2") 
         $.ajax({
             url: "http://localhost:3000/perfumes",
             method: "GET",
@@ -90,7 +90,7 @@ $(document).ready(function () {
                 content += "<tbody>";
 
                 data.forEach(function (client) {
-                    console.log(client.roles);
+                    //console.log(client.roles);
                     content += "<tr>";
                     content += "<td>" + client.name + "</td>";
                     content += "<td>" + client.email + "</td>";
@@ -140,7 +140,7 @@ $(document).ready(function () {
                 Authorization: `Bearer ${token}`
             },
             success: function (data) {
-                console.log("11");
+                //console.log("11");
 
                 var content = "<h3>Orders Content</h3>";
                 content += "<table class='table table-bordered'>";
